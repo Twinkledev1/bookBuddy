@@ -13,7 +13,7 @@ export const createUser = async (firstName, lastName, email, password) => {
       ($1, $2, $3, $4)
     RETURNING
       *
-  `;
+  ;`;
   const hashedPassword = await bcrypt.hash(password, 10);
   const { rows } = await db.query(sql, [
     firstName,
@@ -50,20 +50,17 @@ export const getUserById = async (id) => {
  * @param {string} password
  * @returns
  */
-// export const getUserByCredentials = async (email, password) => {
-//   const sql = `
-//     SELECT
-//       *
-//     FROM
-//       users
-//     WHERE
-//       email = $1
-//   `;
-//   const { rows } = await db.query(sql, [email]);
-//   const user = rows[0];
-//   if (!user) return;
-
-//   // const isValid = await bcrypt.compare(password, user.password);
-//   // if (!isValid) return null;
-//   return user;
-// };
+export const getUserByCredentials = async (email, password) => {
+  const sql = `
+    SELECT
+      *
+    FROM
+      users
+    WHERE
+      email = $1
+  `;
+  const { rows } = await db.query(sql, [email]);
+  const user = rows[0];
+  if (!user) return;
+  return user;
+};
